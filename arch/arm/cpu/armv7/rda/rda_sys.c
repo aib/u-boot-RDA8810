@@ -117,6 +117,7 @@ void rda_nand_iodrive_set(void)
  */
 enum media_type rda_media_get(void)
 {
+	return MEDIA_NAND;
 #ifdef CONFIG_SDMMC_BOOT
 	return MEDIA_MMC;
 #else
