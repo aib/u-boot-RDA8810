@@ -268,7 +268,7 @@
 	"factorydata_addr=83000000\0" \
 	"kernel_addr=84000000\0" \
 	"initrd_addr=85000000\0" \
-	"boot_device=mmc\0" \
+	"boot_device=nand\0" \
 	""
 
 #define CONFIG_BOOTARGS			\
@@ -279,8 +279,10 @@
 
 #define CONFIG_BOOTCOMMAND		\
 	"mux_config; "		\
-	"mmc dev 0; "		\
-	"ext2load mmc 0:1 ${script_addr} boot.scr && source ${script_addr};" \
+	"mtdparts add nand0 2M@0 bootloader;" \
+	"mtdparts add nand0 510M nandroot;" \
+	"ubi part nand0,1;" \
+	"ubifsmount nandroot && ubifsload ${script_addr} \"/boot/boot-nand.scr\" && source ${script_addr};" \
 	"echo Running boot script failed;"
 
 #endif /* !CONFIG_SPL_BUILD */
