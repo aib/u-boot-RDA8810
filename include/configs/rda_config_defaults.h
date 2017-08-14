@@ -277,6 +277,9 @@
 	"root=/dev/ram rw "		\
 	"rdinit=/init"
 
+#ifdef CONFIG_RDA_PDL
+#define CONFIG_BOOTCOMMAND "pdl2"
+#else /* CONFIG_RDA_PDL */
 #define CONFIG_BOOTCOMMAND		\
 	"mux_config; "		\
 	"mtdparts add nand0 2M@0 bootloader;" \
@@ -284,6 +287,7 @@
 	"ubi part nand0,1;" \
 	"ubifsmount nandroot && ubifsload ${script_addr} \"/boot/boot-nand.scr\" && source ${script_addr};" \
 	"echo Running boot script failed;"
+#endif /* CONFIG_RDA_PDL */
 
 #endif /* !CONFIG_SPL_BUILD */
 
