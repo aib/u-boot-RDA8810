@@ -659,7 +659,11 @@ int pdl_nand_init(void)
 	download_max_size = 24*1024*1024;//FB_DOWNLOAD_BUF_SIZE;
 	pdl_dbg("download buffer %p, max size %ld\n", download_buf, download_max_size);
 
+#ifdef CONFIG_RDA_PDL
+	ret = 1;
+#else
 	ret = mtdparts_init_from_ptbl();
+#endif
 	/* if fail to load partition table, try default */
 	if(ret) {
 		ret = mtdparts_init_default();
